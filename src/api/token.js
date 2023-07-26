@@ -1,24 +1,37 @@
 import axios from "axios";
-const handleToken = (code, redirect_uri, grant_type, client_id, client_secret) =>{
-    let urlText = `token?code=`+ code +`&grant_type=`+grant_type+`&client_secret=`+client_secret+`&client_id=`+client_id+`&redirect_uri=`+ redirect_uri;
-    var config = {
-    method: 'post',
+const handleToken = (refresh_token, grant_type, client_id, client_secret) => {
+  var qs = require("qs");
+  var data = qs.stringify({
+    grant_type: "refresh_token",
+    client_id: client_id,
+    client_secret: client_secret,
+    refresh_token: refresh_token,
+  });
+  var config = {
+    method: "post",
     maxBodyLength: Infinity,
-    url: urlText,
-    
+    url: "https://oauth.hanet.com/token",
     headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        'Accept': 'application/json',
-        }
-    };
-    // console.log('<<', code,"< >",redirect_uri,"< > ",grant_type,"< >",client_id,"<  sec >",client_secret,"<e end>")
-    return axios(config)
-    // .then(function (response) {
-    //     console.log(JSON.stringify(response.data));
-    // })
-    // .catch(function (error) {
-    //     console.log(error);
-    // });
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+    data: data,
+  };
 
-}
-export{handleToken}
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  // return axios(config)
+  // .then(function (response) {
+  //     console.log(JSON.stringify(response.data));
+  // })
+  // .catch(function (error) {
+  //     console.log(error);
+  // });
+  return axios(config);
+};
+export { handleToken };

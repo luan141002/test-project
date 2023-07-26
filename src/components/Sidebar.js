@@ -10,7 +10,7 @@ import {
   FaChevronLeft,
   FaBolt,
 } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { HiOutlineLogout } from "react-icons/hi";
 import {
@@ -23,6 +23,7 @@ const linkClass =
 
 function Sidebar() {
   // h-screen = height:100vh=100%
+  const navigate = useNavigate();
   return (
     <div className="bg-[#4E73DF] h-screen px-[25px]">
       {/* Title  */}
@@ -56,7 +57,10 @@ function Sidebar() {
           ))}
         </div>
 
-        <div className={classNames(linkClass, "cursor-pointer text-red-500")}>
+        <div
+          onClick={() => navigate("/authen")}
+          className={classNames(linkClass, "cursor-pointer text-red-500")}
+        >
           <span className="text-xl">
             <HiOutlineLogout />
           </span>

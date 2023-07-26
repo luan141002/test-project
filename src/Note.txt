@@ -1,0 +1,4 @@
+Ý tưởng :
+- Mỗi một app sẽ kết nối với nhiều device nhất định ==> nhiệm vụ :
++ Webhook để lấy khi người dùng trong camera mình đang quản lý được camera detect và gửi lại cho front end sau đó sẽ load lên==> Redux 
++ 

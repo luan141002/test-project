@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -66,22 +66,18 @@ const recentOrderData = [
   },
 ];
 
-const Table = () => {
-  const [rowData] = useState(recentOrderData);
-
-  const [columnDefs] = useState([
-    { field: "id" },
-    { field: "product_id", filter: true },
-    { field: "customer_id" },
-    { field: "customer_name", filter: true },
-    { field: "order_date" },
-    { field: "order_total" },
-    { field: "current_order_status" },
-    { field: "shipment_address" },
-  ]);
-  console.log(rowData);
+const Table = ({ data, columns }) => {
+  const [rowData, setData] = useState(data);
+  useMemo(() => {
+    setData(data);
+  }, [data]);
+  const [columnDefs] = useState(
+    columns.map((column) => {
+      return { field: column };
+    })
+  );
   return (
-    <div className="ag-theme-alpine w-full h-screen">
+    <div className="ag-theme-alpine h-[70%] w-[70%]">
       <AgGridReact rowData={rowData} columnDefs={columnDefs}></AgGridReact>
     </div>
   );
